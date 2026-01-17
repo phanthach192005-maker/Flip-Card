@@ -1,0 +1,107 @@
+{
+  "questions": [
+    {
+      "q": "Em hãy cho biết USB Drive dùng để làm gì?",
+      "options": ["Gửi và nhận tin nhắn SMS", "Chụp ảnh", "Lưu trữ và truyền dữ liệu", "Chơi game"],
+      "a": "Lưu trữ và truyền dữ liệu"
+    },
+    {
+      "q": "Em hãy cho biết, cài đặt thiết bị di động nào cho phép ứng dụng theo dõi vị trí của em?",
+      "options": ["Cài đặt vị trí", "Cài đặt thông báo", "Cài đặt Wifi", "Cài đặt độ sáng màn hình"],
+      "a": "Cài đặt vị trí"
+    },
+    {
+      "q": "Em hãy cho biết, giao thức nào đảm bảo kết nối an toàn và được mã hoá giữa trình duyệt web và trang web?",
+      "options": ["SMTP", "HTTP", "HTTPS", "FTP"],
+      "a": "HTTPS"
+    },
+    {
+      "q": "Em hãy cho biết, bước khắc phục sự cố cơ bản cần thử trên thiết bị âm thanh không hoạt động là gì?",
+      "options": ["Kiểm tra các điều khiển âm lượng", "Điều chỉnh độ sáng màn hình", "Cài đặt một card âm thanh mới", "Thay thế thiết bị"],
+      "a": "Kiểm tra các điều khiển âm lượng"
+    },
+    {
+      "q": "Em hãy cho biết, tuỳ chọn nào dưới đây không phải là một phần của URL?",
+      "options": ["Giao thức (Protocol)", "Tên miền phụ (Subdomain)", "Tên miền (Domain Name)", "Địa chỉ IP (IP Address)"],
+      "a": "Địa chỉ IP (IP Address)"
+    },
+    {
+      "q": "Em hãy cho biết, mục đích của địa chỉ IP là gì?",
+      "options": ["Gửi và nhận email", "Xác định vị trí của một trang web", "Điều khiển các thiết bị ngoại vi của máy tính", "Chơi các tập tin âm nhạc"],
+      "a": "Xác định vị trí của một trang web"
+    },
+    {
+      "q": "Em tin tưởng tên miền nào nhất khi tìm kiếm thông tin cập nhật về du lịch nước ngoài?",
+      "options": [".gov", ".net", ".com", ".xyz"],
+      "a": ".gov"
+    },
+    {
+      "q": "Em không kết nối được với internet nhà mình, không ai khác trong nhà gặp vấn đề này. Em nên làm gì trước tiên để khắc phục?",
+      "options": ["Khởi động lại (Reset) bộ chuyển đổi không dây (Wireless Adapter) trên thiết bị của em", "Tắt hoặc vô hiệu hoá bluetooth trên thiết bị của em", "Thay pin cho thiết bị của em", "Di chuyển đến gần bộ định tuyến hơn"],
+      "a": "Khởi động lại (Reset) bộ chuyển đổi không dây (Wireless Adapter) trên thiết bị của em"
+    },
+    {
+      "q": "Em hãy cho biết, tuỳ chọn nào là khả năng tiếp cận trong công nghệ?",
+      "options": ["Sự dễ dàng sử dụng và sẵn có của công nghệ dành cho người khuyết tật", "Cách dữ liệu được gửi qua internet", "Quá trình lưu trữ dữ liệu trên đám mây", "Khả năng kết nối với mạng"],
+      "a": "Sự dễ dàng sử dụng và sẵn có của công nghệ dành cho người khuyết tật"
+    },
+    {
+      "q": "Em hãy cho biết, mục đích cua địa chỉ IP (Internet Protocol) là gì?",
+      "options": ["Xác định các thiết bị hỗ trợ internet trên mạng máy tính", "Xác định vị trí địa chỉ vật lý của trang web", "Gửi và nhận email", "Xác định thông tin cá nhân của người dùng"],
+      "a": "Xác định các thiết bị hỗ trợ internet trên mạng máy tính"
+    },
+    {
+      "q": "Em hãy cho biết, internet là gì?",
+      "options": ["Một trình duyệt web", "Một mạng lưới toàn cầu gồm các thiết bị được kết nối", "Một thiết bị để thực hiện cuộc gọi điện thoại", "Một vị trí vật lí nơi dữ liệu được lưu trữ"],
+      "a": "Một mạng lưới toàn cầu gồm các thiết bị được kết nối"
+    },
+    {
+      "q": "Em hãy cho biết, lợi ích của việc lưu trữ đám mây là gì?",
+      "options": ["Thông tin chỉ có thể được truy cập bởi một thiết bị tại một thời điểm", "Bản in trên giấy của tài liệu được lưu trữ", "Bất kỳ ai cũng có thể truy cập vào dữ liệu mà không cần xin phép", "Dữ liệu được tự động đồng bộ hoá trên tất cả thiết bị"],
+      "a": "Dữ liệu được tự động đồng bộ hoá trên tất cả thiết bị"
+    },
+    {
+      "q": "Em hãy cho biết, tuỳ chọn nào dưới đây là mô tả đúng về USB Drive?",
+      "options": ["Một thiết bị nhớ hoạt động trên đám mây", "Một cơ sở dữ liệu lưu trữ các tập tin trực tuyến", "Một thiết bị lưu trữ dạng cắm", "Một không gian lưu trữ trên một ổ cứng"],
+      "a": "Một thiết bị lưu trữ dạng cắm"
+    },
+    {
+      "q": "Em hãy cho biết, thuật ngữ nào chỉ các bit dữ liệu nhỏ được thu thập bởi trang web mà em truy cập?",
+      "options": ["Bảng tính", "Cookies", "Dữ kiện", "Tấn công xâm nhập (Hacking)"],
+      "a": "Cookies"
+    },
+    {
+      "q": "Máy in của em ngừng in, em nên làm gì trước tiên để giải quyết vấn đề này",
+      "options": ["Kiểm tra dây cáp hoặc kết nối của máy in", "Dọn sạch hàng chờ máy in", "Khởi động lại máy tính", "Thay đổi trình điều khiển máy in"],
+      "a": "Kiểm tra dây cáp hoặc kết nối của máy in"
+    },
+    {
+      "q": "Máy tính của em bị chậm. Em nên làm gì trước tiên?",
+      "options": ["Rút phích cắm máy tính", "Cập nhật hệ điều hành", "Nhấp chuột liên tục", "Đóng các ứng dụng hoặc cửa sổ không sử dụng"],
+      "a": "Đóng các ứng dụng hoặc cửa sổ không sử dụng"
+    },
+    {
+      "q": "Em hãy cho biết, URL (Uniform Resource Locator) là gì?",
+      "options": ["Tác giả của một trang web", "Tên của một trang web", "Nhà phát hành của một trang web", "Địa chỉ của một trang web"],
+      "a": "Địa chỉ của một trang web"
+    },
+    {
+      "q": "Khi tìm một nhà hàng bán thức ăn nhanh trên mạng, hành động nào sẽ có thể giúp ẩn vị trí của em?",
+      "options": ["Bật duyệt web ở chế độ riêng tư", "Xoá cookies của em", "Xoá cache (bộ đệm ẩn) sau khi ngừng duyệt web", "Tải phần mềm chặn quảng cáo"],
+      "a": "Bật duyệt web ở chế độ riêng tư"
+    },
+    {
+      "q": "Orson là tài xế xe buýt của một trường học. Anh ấy đang chở một đoàn học sinh đi thực tế đến một nơi chưa từng đến. Anh ấy có thể sử dụng loại công nghệ nào để giúp mình mình định hướng được vị trí cần đến?",
+      "options": ["GPS (Global Poisitioning System)", "Quả địa cầu (Globe)", "Radio", "Máy phát MP3 (MP3 Player)"],
+      "a": "GPS (Global Poisitioning System)"
+    },
+    {
+      "q": "Em hãy cho biết địa chỉ URL nào có định dạng đúng?",
+      "options": ["https://www.companypro.net/test", "https://www.companypro/net/test", "http://www.companypro/test","https://.companypro.net/test"],
+      "a": "https://www.companypro.net/test"
+    }
+  ],
+
+
+"mysteryAnswer": "đồng cam cộng khổ"
+}

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lật thẻ OT LV3</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <h2>Lật thẻ đoán hình bí mật</h2>
+
+  <button id="guessMystery">Trả lời ngay bức tranh bí ẩn</button>
+
+  <div id="container">
+    <img id="finalImage" src="images/mystery_images/dong-cam-cong-kho.png" width="600" />
+    <div id="grid"></div>
+  </div>
+
+  <div id="questionBox" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeQuestion()">&times;</span>
+      <h3 id="questionText"></h3>
+      <div id="optionsContainer"></div>
+      <button onclick="submitAnswer()">Trả lời</button>
+    </div>
+  </div>
+
+  <div id="mysteryBox" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeMystery()">&times;</span>
+      <h3>Đoán bức tranh bí ẩn:</h3>
+      <input type="text" id="mysteryInput" placeholder="Nhập đáp án..." />
+      <br />
+      <button onclick="submitMystery()">Xác nhận</button>
+    </div>
+  </div>
+
+  <div id="wheelBox" class="modal">
+    <div class="modal-content wheel-modal">
+      <span class="close" onclick="closeWheel()">&times;</span>
+      <h3>Vòng quay may mắn! 🎉</h3>
+      <div class="wheel-container">
+        <canvas id="wheelCanvas" width="300" height="300"></canvas>
+        <div class="wheel-pointer">▼</div>
+      </div>
+      <button id="spinButton" onclick="spinWheel()">Quay!</button>
+      <div id="wheelResult"></div>
+    </div>
+  </div>
+
+  <div id="feedbackBox" class="modal">
+    <div class="modal-content feedback-modal">
+      <span class="close" onclick="closeFeedback()">&times;</span>
+      <img id="feedbackImage" src="" alt="Feedback" />
+      <p id="feedback-text"></p>
+    </div>
+  </div>
+
+  <script>
+    let allQuestions = [];
+    let availableQuestions = [];
+    let mysteryAnswer = "";
+    let feedbacktext = document.getElementById("feedback-text");
+
+    let currentIndex = null;
+    let currentQuestion = null;
+    let currentQuestionIndex = null;
+    let selectedAnswer = null;
+
+    // hình ảnh khi trả lời đúng
+    const correctImages = [
+      "images/correct-img/1.jpg",
+      "images/correct-img/2.jpg",
+      "images/correct-img/3.jpg",
+      "images/correct-img/4.webp",
+      "images/correct-img/5.jpg"
+    ];
+
+    // hình ảnh khi trả lời sai
+    const wrongImages = [
+      "images/wrong-img/1.jpg",
+      "images/wrong-img/2.jpg",
+      "images/wrong-img/3.webp",
+      "images/wrong-img/4.webp",
+      "images/wrong-img/5.jpg"
+    ];
+
+    // Load câu hỏi từ file JSON
+    async function loadQuestions() {
+      try {
+        const response = await fetch("questions.json");
+        const data = await response.json();
+        allQuestions = data.questions;
+        availableQuestions = [...allQuestions];
+        mysteryAnswer = data.mysteryAnswer;
+        loadGrid();
+      } catch (error) {
+        console.error("Lỗi khi load file JSON:", error);
+        alert("Không thể load câu hỏi. Vui lòng kiểm tra file questions.json");
+      }
+    }
+
+    function getRandomQuestion() {
+      if (availableQuestions.length === 0) {
+        return null;
+      }
+      const randomIdx = Math.floor(Math.random() * availableQuestions.length);
+      const question = availableQuestions[randomIdx];
+      currentQuestionIndex = randomIdx; // Lưu lại index để xóa sau nếu trả lời đúng
+      return question;
+    }
+
+    function loadGrid() {
+      const grid = document.getElementById("grid");
+      allQuestions.forEach((_, i) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.textContent = i + 1;
+        card.id = `card-${i}`;
+        card.onclick = function () {
+          if (!this.classList.contains("hidden-card")) {
+            openQuestion(i);
+          }
+        };
+        grid.appendChild(card);
+      });
+    }
+
+    function openQuestion(i) {
+      currentIndex = i;
+      selectedAnswer = null;
+
+      const question = getRandomQuestion();
+      if (!question) {
+        alert("Hết câu hỏi rồi!");
+        return;
+      }
+
+      currentQuestion = question;
+      document.getElementById("questionText").textContent = question.q;
+      const container = document.getElementById("optionsContainer");
+      container.innerHTML = "";
+
+      question.options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.className = "option-button";
+        btn.textContent = option;
+        btn.onclick = () => selectOption(btn, option);
+        container.appendChild(btn);
+      });
+
+      document.getElementById("questionBox").style.display = "block";
+    }
+
+    function selectOption(btn, option) {
+      document.querySelectorAll(".option-button").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      selectedAnswer = option;
+    }
+
+    function submitAnswer() {
+      if (!selectedAnswer) {
+        alert("Vui lòng chọn một đáp án!");
+        return;
+      }
+
+      let correct = currentQuestion.a;
+      document.getElementById("questionBox").style.display = "none";
+
+      if (selectedAnswer === correct) {
+        const card = document.getElementById(`card-${currentIndex}`);
+        card.classList.add("hidden-card");
+        card.textContent = "";
+        feedbacktext.textContent = "Chính xác!";
+        
+        // Xóa câu hỏi đã trả lời đúng khỏi danh sách
+        if (currentQuestionIndex !== null) {
+          availableQuestions.splice(currentQuestionIndex, 1);
+          currentQuestionIndex = null;
+        }
+        
+        // Hiển thị hình ảnh đúng
+        showFeedback(true);
+
+      } else {
+        // Hiển thị hình ảnh sai
+        showFeedback(false);
+        feedbacktext.textContent = "Sai rồi!!!!!";
+      }
+    }
+
+    function closeQuestion() {
+      document.getElementById("questionBox").style.display = "none";
+    }
+
+    function closeMystery() {
+      document.getElementById("mysteryBox").style.display = "none";
+    }
+
+    function checkWin() {
+      let allDone = [...document.querySelectorAll('.card')].every(c => c.classList.contains('hidden-card'));
+      if (allDone) {
+        document.getElementById("finalImage").style.display = "block";
+      }
+    }
+
+    document.getElementById("guessMystery").onclick = () => {
+      document.getElementById("mysteryBox").style.display = "block";
+    };
+
+    function submitMystery() {
+      let input = document.getElementById("mysteryInput").value.toLowerCase().trim();
+      let answer = mysteryAnswer.toLowerCase().trim();
+
+      if (input === answer) {
+        document.querySelectorAll('.card').forEach(c => {
+          c.classList.add('hidden-card');
+          c.textContent = "";
+        });
+        document.getElementById("finalImage").style.display = "block";
+        alert("Chính xác! Bạn đã mở toàn bộ bức tranh.");
+        document.getElementById("mysteryBox").style.display = "none";
+      } else {
+        alert("Sai rồi! Thử lại nhé.");
+      }
+    }
+
+    // Vòng quay may mắn - Kẹo có tỉ lệ thấp hơn (1/8)
+    const prizes = [
+      { text: "Kẹo", color: "#FF6B6B" },
+      { text: "+1 Điểm", color: "#4ECDC4" },
+      { text: "Trả lời tiếp", color: "#95E1D3" },
+      { text: "Mời 1 Bạn", color: "#FFE66D" },
+      { text: "Trả lời tiếp", color: "#95E1D3" },
+      { text: "Mời 1 Bạn", color: "#FFE66D" },
+      { text: "+1 Điểm", color: "#4ECDC4" },
+      { text: "Trả lời tiếp", color: "#95E1D3" }
+    ];
+    let isSpinning = false;
+
+    function drawWheel() {
+      const canvas = document.getElementById("wheelCanvas");
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext("2d");
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = 140;
+      const sliceAngle = (2 * Math.PI) / prizes.length;
+      const offsetAngle = -Math.PI / 2; // Bắt đầu từ trên cùng
+
+      prizes.forEach((prize, i) => {
+        const startAngle = i * sliceAngle + offsetAngle;
+        const endAngle = startAngle + sliceAngle;
+
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = prize.color;
+        ctx.fill();
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(startAngle + sliceAngle / 2);
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#000";
+        ctx.font = "bold 16px Arial";
+        ctx.fillText(prize.text, radius / 1.5, 5);
+        ctx.restore();
+      });
+
+      // Vẽ tâm
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 20, 0, 2 * Math.PI);
+      ctx.fillStyle = "#fff";
+      ctx.fill();
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function showWheel() {
+      document.getElementById("wheelBox").style.display = "block";
+      document.getElementById("wheelResult").textContent = "";
+      document.getElementById("spinButton").disabled = false;
+      drawWheel();
+    }
+
+    function spinWheel() {
+      if (isSpinning) return;
+      
+      isSpinning = true;
+      document.getElementById("spinButton").disabled = true;
+      document.getElementById("wheelResult").textContent = "";
+
+      const canvas = document.getElementById("wheelCanvas");
+      const ctx = canvas.getContext("2d");
+      const spins = 5 + Math.random() * 5;
+      const totalRotation = spins * 360 + Math.random() * 360;
+      const duration = 3000;
+      const startTime = Date.now();
+
+      function animate() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const currentRotation = totalRotation * easeOut;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate((currentRotation * Math.PI) / 180);
+        ctx.translate(-canvas.width / 2, -canvas.height / 2);
+        drawWheel();
+        ctx.restore();
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          // Tính phần trúng: pointer ở trên cùng
+          const normalizedRotation = totalRotation % 360;
+          const sliceAngle = 360 / prizes.length;
+          const adjustedAngle = (360 - normalizedRotation) % 360;
+          const prizeIndex = Math.floor(adjustedAngle / sliceAngle) % prizes.length;
+          showResult(prizes[prizeIndex]);
+        }
+      }
+
+      animate();
+    }
+
+    function showResult(prize) {
+      const resultDiv = document.getElementById("wheelResult");
+      resultDiv.innerHTML = `<h3 style="color: ${prize.color}; margin-top: 15px;"> ${prize.text}!</h3>`;
+      isSpinning = false;
+    }
+
+    function closeWheel() {
+      document.getElementById("wheelBox").style.display = "none";
+      checkWin();
+    }
+
+    function showFeedback(isCorrect) {
+      const images = isCorrect ? correctImages : wrongImages;
+      const randomImage = images[Math.floor(Math.random() * images.length)];
+      
+      document.getElementById("feedbackImage").src = randomImage;
+      document.getElementById("feedbackBox").style.display = "block";
+      
+      setTimeout(() => {
+        closeFeedback();
+        if (isCorrect) {
+          showWheel();
+        }
+      }, 2000);
+    }
+
+    function closeFeedback() {
+      document.getElementById("feedbackBox").style.display = "none";
+    }
+
+    loadQuestions();
+  </script>
+</body>
+
+</html>
