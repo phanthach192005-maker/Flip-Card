@@ -131,7 +131,14 @@ button:hover {
   background: #3b82f6;
   color: white;
 }
-
+/* popup hình bí mật */
+#popup-mys{
+  border: 1px solid red;
+  border-radius: 10px;
+  background: black;
+  color: white;
+  width: 200px;
+}
 h2 {
   margin-top: 0;
   border: 2px solid #cbfa23;
