@@ -19,7 +19,15 @@ body {
   margin-top: 20px;
   /* background-color: red; */
 }
-
+/* popup hình bí mật */
+#popup-mys{
+  border: 1px solid red;
+  border-radius: 10px;
+  background: black;
+  color: white;
+  width: 200px;
+  display: none;
+}
 #finalImage {
   position: absolute;
   top: 0;
