@@ -138,6 +138,7 @@ button:hover {
   background: black;
   color: white;
   width: 200px;
+  display: none;
 }
 h2 {
   margin-top: 0;
