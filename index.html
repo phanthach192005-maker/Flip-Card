@@ -60,7 +60,7 @@
 
 
   <!-- popup thông báo -->
-  <div>
+  <div id="popup-mys">
     <p>Chúc mừng!</p>
   </div>
 
@@ -227,6 +227,7 @@
         });
         document.getElementById("finalImage").style.display = "block";
         // alert("Chính xác! Bạn đã mở toàn bộ bức tranh.");
+        document.getElementById("popup-mys").style.display = "block";
         document.getElementById("mysteryBox").style.display = "none";
       } else {
         alert("Sai rồi! Thử lại nhé.");
